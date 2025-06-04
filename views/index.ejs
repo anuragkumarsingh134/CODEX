@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Todo App</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1>Advanced Todo App</h1>
+<form action="/add" method="POST">
+    <input type="text" name="title" placeholder="Task Title" required>
+    <br>
+    <textarea name="description" placeholder="Description"></textarea>
+    <br>
+    <label>Priority:</label>
+    <select name="priority">
+        <option value="0">Low</option>
+        <option value="1">Medium</option>
+        <option value="2">High</option>
+    </select>
+    <br>
+    <label>Due Date:</label>
+    <input type="date" name="due_date">
+    <br>
+    <button type="submit">Add Task</button>
+</form>
+<hr>
+<ul>
+<% tasks.forEach(task => { %>
+    <li>
+        <strong><%= task.title %></strong> - <%= task.description %> 
+        <% if(task.due_date){ %>
+            (Due: <%= task.due_date %>)
+        <% } %>
+        <% if(!task.completed){ %>
+            <form action="/complete/<%= task.id %>" method="POST" style="display:inline">
+                <button>Complete</button>
+            </form>
+        <% } else { %>
+            [Completed]
+        <% } %>
+        <form action="/delete/<%= task.id %>" method="POST" style="display:inline">
+            <button>Delete</button>
+        </form>
+    </li>
+<% }) %>
+</ul>
+</body>
+</html>
